@@ -7,7 +7,7 @@ let images = UIImage(named: "sample")
 
 
 //filter red color
-/*func FilterImageRed(imageParam: UIImage) -> UIImage{
+/*func FilterImageContrast(imageParam: UIImage) -> UIImage{
     var myRGBA = RGBAImage(image: imageParam)
     
     var totalRed = 0
@@ -61,7 +61,7 @@ let avgRed = 83
 let avgBlue = 98
 let avgGreen = 98
 
-func FilterImageBlue(imageParam: UIImage) -> UIImage{
+/*func FilterImageBright(imageParam: UIImage) -> UIImage{
     var myRGBA = RGBAImage(image: imageParam)
     
     
@@ -75,16 +75,95 @@ func FilterImageBlue(imageParam: UIImage) -> UIImage{
             
             if(RedDiff>0)
             {
-                pixel.red = UInt8( max(0,min(255,avgRed + RedDiff+30)))
+                pixel.red = UInt8( max(0,min(255,avgRed + RedDiff+40)))
                 myRGBA!.pixels[index] = pixel
                 
-                pixel.blue = UInt8( max(0,min(255,avgBlue + BlueDiff+30)))
+                pixel.blue = UInt8( max(0,min(255,avgBlue + BlueDiff+40)))
                 myRGBA!.pixels[index] = pixel
                 
-                pixel.green = UInt8( max(0,min(255,avgGreen + GreenDiff+30)))
+                pixel.green = UInt8( max(0,min(255,avgGreen + GreenDiff+40)))
                 myRGBA!.pixels[index] = pixel
                 
-                pixel.alpha = UInt8(5)
+                /*pixel.alpha = UInt8(5)
+                myRGBA!.pixels[index] = pixel*/
+            }
+        }
+    }
+    
+    return (myRGBA?.toUIImage())!
+}*/
+
+/*func FilterImageDark(imageParam: UIImage) -> UIImage{
+    var myRGBA = RGBAImage(image: imageParam)
+    
+    for y in 0..<myRGBA!.height{
+        for x in 0..<myRGBA!.width{
+            let index = y * myRGBA!.width + x
+            var pixel = myRGBA!.pixels[index]
+            let RedDiff = Int(pixel.red) - avgRed
+            let BlueDiff = Int(pixel.blue) - avgBlue
+            let GreenDiff = Int(pixel.green) - avgGreen
+            
+            if(RedDiff>0)
+            {
+                pixel.red = UInt8( max(0,min(255,avgRed + (RedDiff/2))))
+                myRGBA!.pixels[index] = pixel
+                
+                pixel.blue = UInt8( max(0,min(255,avgBlue + (BlueDiff/2))))
+                myRGBA!.pixels[index] = pixel
+                
+                pixel.green = UInt8( max(0,min(255,avgGreen + (GreenDiff/2))))
+                myRGBA!.pixels[index] = pixel
+            }
+        }
+    }
+    
+    return (myRGBA?.toUIImage())!
+}*/
+
+/*
+func FilterImageTemperatureHot(imageParam: UIImage) -> UIImage{
+    var myRGBA = RGBAImage(image: imageParam)
+    
+    for y in 0..<myRGBA!.height{
+        for x in 0..<myRGBA!.width{
+            let index = y * myRGBA!.width + x
+            var pixel = myRGBA!.pixels[index]
+            let RedDiff = Int(pixel.red) - avgRed
+            let BlueDiff = Int(pixel.blue) - avgBlue
+            let GreenDiff = Int(pixel.green) - avgGreen
+            
+            if(RedDiff>0)
+            {
+                pixel.red = UInt8( max(0,min(255,avgRed + (RedDiff+40))))
+                myRGBA!.pixels[index] = pixel
+                
+                pixel.green = UInt8( max(0,min(255,avgGreen + (GreenDiff+40))))
+                myRGBA!.pixels[index] = pixel
+            }
+        }
+    }
+    
+    return (myRGBA?.toUIImage())!
+}*/
+
+func FilterImageTemperatureCold(imageParam: UIImage) -> UIImage{
+    var myRGBA = RGBAImage(image: imageParam)
+    
+    for y in 0..<myRGBA!.height{
+        for x in 0..<myRGBA!.width{
+            let index = y * myRGBA!.width + x
+            var pixel = myRGBA!.pixels[index]
+            let RedDiff = Int(pixel.red) - avgRed
+            let BlueDiff = Int(pixel.blue) - avgBlue
+            let GreenDiff = Int(pixel.green) - avgGreen
+            
+            if(RedDiff>0)
+            {
+                pixel.red = UInt8( max(0,min(255,avgRed + (RedDiff+20))))
+                myRGBA!.pixels[index] = pixel
+                
+                pixel.blue = UInt8( max(0,min(255,avgBlue + (BlueDiff+30))))
                 myRGBA!.pixels[index] = pixel
             }
         }
@@ -92,9 +171,6 @@ func FilterImageBlue(imageParam: UIImage) -> UIImage{
     
     return (myRGBA?.toUIImage())!
 }
-
-
-
 
 //var imageRE = FilterImageRed(imageParam: images!)
  var imageRE = FilterImageBlue(imageParam: images!)
