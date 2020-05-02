@@ -2,6 +2,7 @@
 
 import UIKit
 
+
 protocol FilterType {
     func FilterImageContrast(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
     func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
@@ -10,35 +11,48 @@ protocol FilterType {
     func FilterImageTemperatureCold(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
 }
 
-
 class Filters:FilterType {
     func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String, Int>, imageParam: UIImage) -> UIImage {
         var myRGBA = RGBAImage(image: imageParam)
         let count = myRGBA!.width * myRGBA!.height
         let avgRed = avgColor["Red"]
+        let avgBlue = avgColor["Blue"]
+        let avgGreen = avgColor["Green"]
         
         for y in 0..<myRGBA!.height{
             for x in 0..<myRGBA!.width{
                 let index = y * myRGBA!.width + x
                 var pixel = myRGBA!.pixels[index]
-                var redDiff = Int(pixel.red) - avgRed!
+                var BlueDiff = Int(pixel.blue) - avgBlue!
+                var RedDiff = Int(pixel.red) - avgRed!
+                var GreenDiff = Int(pixel.green) - avgGreen!
                 
-                if(redDiff>0)
+                if(RedDiff>0 && GreenDiff>0 && BlueDiff>0)
                 {
-                    //print(Level)
-                    
                     switch Level.rawValue{
                     case "high":
-                        redDiff = redDiff*3
+                        RedDiff = RedDiff+50
+                        GreenDiff = GreenDiff+50
+                        BlueDiff = BlueDiff+50
                     case "medium":
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff+40
+                        GreenDiff = GreenDiff+40
+                        BlueDiff = BlueDiff+40
                     case "low":
-                        redDiff = redDiff*1
+                        RedDiff = RedDiff+30
+                        GreenDiff = GreenDiff+30
+                        BlueDiff = BlueDiff+30
                     default:
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff+40
+                        GreenDiff = GreenDiff+40
+                        BlueDiff = BlueDiff+40
                     }
-                    pixel.red = UInt8( max(0,min(255,avgRed! + redDiff)))
+                    
+                    pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
+                    pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
+                    pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
                     myRGBA!.pixels[index] = pixel
+                    
                 }
             }
         }
@@ -49,29 +63,43 @@ class Filters:FilterType {
         var myRGBA = RGBAImage(image: imageParam)
         let count = myRGBA!.width * myRGBA!.height
         let avgRed = avgColor["Red"]
+        let avgBlue = avgColor["Blue"]
+        let avgGreen = avgColor["Green"]
         
         for y in 0..<myRGBA!.height{
             for x in 0..<myRGBA!.width{
                 let index = y * myRGBA!.width + x
                 var pixel = myRGBA!.pixels[index]
-                var redDiff = Int(pixel.red) - avgRed!
+                var BlueDiff = Int(pixel.blue) - avgBlue!
+                var RedDiff = Int(pixel.red) - avgRed!
+                var GreenDiff = Int(pixel.green) - avgGreen!
                 
-                if(redDiff>0)
+                if(RedDiff>0 && GreenDiff>0 && BlueDiff>0)
                 {
-                    //print(Level)
-                    
                     switch Level.rawValue{
                     case "high":
-                        redDiff = redDiff*3
+                        RedDiff = RedDiff+1
+                        GreenDiff = GreenDiff+1
+                        BlueDiff = BlueDiff+1
                     case "medium":
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff/2
+                        GreenDiff = GreenDiff/2
+                        BlueDiff = BlueDiff/2
                     case "low":
-                        redDiff = redDiff*1
+                        RedDiff = RedDiff+3
+                        GreenDiff = GreenDiff+3
+                        BlueDiff = BlueDiff+3
                     default:
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff/2
+                        GreenDiff = GreenDiff/2
+                        BlueDiff = BlueDiff/2
                     }
-                    pixel.red = UInt8( max(0,min(255,avgRed! + redDiff)))
+                    
+                    pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
+                    pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
+                    pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
                     myRGBA!.pixels[index] = pixel
+                    
                 }
             }
         }
@@ -82,29 +110,37 @@ class Filters:FilterType {
         var myRGBA = RGBAImage(image: imageParam)
         let count = myRGBA!.width * myRGBA!.height
         let avgRed = avgColor["Red"]
+        let avgGreen = avgColor["Green"]
         
         for y in 0..<myRGBA!.height{
             for x in 0..<myRGBA!.width{
                 let index = y * myRGBA!.width + x
                 var pixel = myRGBA!.pixels[index]
-                var redDiff = Int(pixel.red) - avgRed!
                 
-                if(redDiff>0)
+                var RedDiff = Int(pixel.red) - avgRed!
+                var GreenDiff = Int(pixel.green) - avgGreen!
+                
+                if(RedDiff>0 && GreenDiff>0)
                 {
-                    //print(Level)
-                    
                     switch Level.rawValue{
                     case "high":
-                        redDiff = redDiff*3
+                        RedDiff = RedDiff+50
+                        GreenDiff = GreenDiff+50
                     case "medium":
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff+40
+                        GreenDiff = GreenDiff+40
                     case "low":
-                        redDiff = redDiff*1
+                        RedDiff = RedDiff+30
+                        GreenDiff = GreenDiff+30
                     default:
-                        redDiff = redDiff*2
+                        RedDiff = RedDiff+40
+                        GreenDiff = GreenDiff+40
                     }
-                    pixel.red = UInt8( max(0,min(255,avgRed! + redDiff)))
+                    
+                    pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
+                    pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
                     myRGBA!.pixels[index] = pixel
+                    
                 }
             }
         }
@@ -116,16 +152,14 @@ class Filters:FilterType {
         let count = myRGBA!.width * myRGBA!.height
         let avgRed = avgColor["Red"]
         let avgBlue = avgColor["Blue"]
-        let avgGreen = avgColor["Green"]
         
         for y in 0..<myRGBA!.height{
             for x in 0..<myRGBA!.width{
                 let index = y * myRGBA!.width + x
                 var pixel = myRGBA!.pixels[index]
-            
+                
                 var RedDiff = Int(pixel.red) - avgRed!
                 var BlueDiff = Int(pixel.blue) - avgBlue!
-                var GreenDiff = Int(pixel.green) - avgGreen!
                 
                 if(RedDiff>0 && BlueDiff>0)
                 {
@@ -147,7 +181,7 @@ class Filters:FilterType {
                     pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
                     pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
                     myRGBA!.pixels[index] = pixel
-
+                    
                 }
             }
         }
@@ -190,6 +224,7 @@ class Filters:FilterType {
 }
 
 
+
 class Photo:Filters{
 
     let images = UIImage(named: "sample")
@@ -227,7 +262,6 @@ class Photo:Filters{
     }
 }
 
-
 enum LevelFilter : String{
     case low
     case medium
@@ -239,7 +273,13 @@ let PhotoFilter = Photo()
 var ColorDictionary = PhotoFilter.ReadColors(imageParam: images!)
 
 
-var Filter1 = PhotoFilter.FilterImageContrast(Level: LevelFilter.low, avgColor: ColorDictionary, imageParam: images!)
+var Filter1 = PhotoFilter.FilterImageContrast(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
 
 var Filter2 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+
+var Filter3 = PhotoFilter.FilterImageTemperatureHot(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+
+var Filter4 = PhotoFilter.FilterImageDark(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+
+var Filter5 = PhotoFilter.FilterImageBright(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
 
