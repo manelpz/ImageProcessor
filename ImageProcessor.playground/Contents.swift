@@ -4,25 +4,24 @@ import UIKit
 
 
 protocol FilterType {
-    func FilterImageContrast(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
-    func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
-    func FilterImageDark(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
-    func FilterImageTemperatureHot(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
-    func FilterImageTemperatureCold(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage
+    func FilterImageContrast(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage
+    func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage
+    func FilterImageDark(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage
+    func FilterImageTemperatureHot(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage
+    func FilterImageTemperatureCold(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage
 }
 
 class Filters:FilterType {
-    func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String, Int>, imageParam: UIImage) -> UIImage {
-        var myRGBA = RGBAImage(image: imageParam)
-        let count = myRGBA!.width * myRGBA!.height
+    
+    func FilterImageBright(Level: LevelFilter, avgColor: Dictionary<String, Int>,  myRGBA: RGBAImage) -> UIImage {
         let avgRed = avgColor["Red"]
         let avgBlue = avgColor["Blue"]
         let avgGreen = avgColor["Green"]
-        
-        for y in 0..<myRGBA!.height{
-            for x in 0..<myRGBA!.width{
-                let index = y * myRGBA!.width + x
-                var pixel = myRGBA!.pixels[index]
+        var myRGBA = myRGBA
+        for y in 0..<myRGBA.height{
+            for x in 0..<myRGBA.width{
+                let index = y * myRGBA.width + x
+                var pixel = myRGBA.pixels[index]
                 var BlueDiff = Int(pixel.blue) - avgBlue!
                 var RedDiff = Int(pixel.red) - avgRed!
                 var GreenDiff = Int(pixel.green) - avgGreen!
@@ -51,25 +50,23 @@ class Filters:FilterType {
                     pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
                     pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
                     pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
-                    myRGBA!.pixels[index] = pixel
+                    myRGBA.pixels[index] = pixel
                     
                 }
             }
         }
-        return (myRGBA?.toUIImage())!
+        return (myRGBA.toUIImage())!
     }
     
-    func FilterImageDark(Level: LevelFilter, avgColor: Dictionary<String, Int>, imageParam: UIImage) -> UIImage {
-        var myRGBA = RGBAImage(image: imageParam)
-        let count = myRGBA!.width * myRGBA!.height
+    func FilterImageDark(Level: LevelFilter, avgColor: Dictionary<String, Int>, myRGBA: RGBAImage) -> UIImage {
         let avgRed = avgColor["Red"]
         let avgBlue = avgColor["Blue"]
         let avgGreen = avgColor["Green"]
-        
-        for y in 0..<myRGBA!.height{
-            for x in 0..<myRGBA!.width{
-                let index = y * myRGBA!.width + x
-                var pixel = myRGBA!.pixels[index]
+        var myRGBA = myRGBA
+        for y in 0..<myRGBA.height{
+            for x in 0..<myRGBA.width{
+                let index = y * myRGBA.width + x
+                var pixel = myRGBA.pixels[index]
                 var BlueDiff = Int(pixel.blue) - avgBlue!
                 var RedDiff = Int(pixel.red) - avgRed!
                 var GreenDiff = Int(pixel.green) - avgGreen!
@@ -98,24 +95,24 @@ class Filters:FilterType {
                     pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
                     pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
                     pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
-                    myRGBA!.pixels[index] = pixel
+                    myRGBA.pixels[index] = pixel
                     
                 }
             }
         }
-        return (myRGBA?.toUIImage())!
+        return (myRGBA.toUIImage())!
     }
     
-    func FilterImageTemperatureHot(Level: LevelFilter, avgColor: Dictionary<String, Int>, imageParam: UIImage) -> UIImage {
-        var myRGBA = RGBAImage(image: imageParam)
-        let count = myRGBA!.width * myRGBA!.height
+    func FilterImageTemperatureHot(Level: LevelFilter, avgColor: Dictionary<String, Int>, myRGBA: RGBAImage) -> UIImage {
+
         let avgRed = avgColor["Red"]
         let avgGreen = avgColor["Green"]
+        var myRGBA = myRGBA
         
-        for y in 0..<myRGBA!.height{
-            for x in 0..<myRGBA!.width{
-                let index = y * myRGBA!.width + x
-                var pixel = myRGBA!.pixels[index]
+        for y in 0..<myRGBA.height{
+            for x in 0..<myRGBA.width{
+                let index = y * myRGBA.width + x
+                var pixel = myRGBA.pixels[index]
                 
                 var RedDiff = Int(pixel.red) - avgRed!
                 var GreenDiff = Int(pixel.green) - avgGreen!
@@ -139,24 +136,24 @@ class Filters:FilterType {
                     
                     pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
                     pixel.green = UInt8( max(0,min(255,avgGreen! + GreenDiff)))
-                    myRGBA!.pixels[index] = pixel
+                    myRGBA.pixels[index] = pixel
                     
                 }
             }
         }
-        return (myRGBA?.toUIImage())!
+        return (myRGBA.toUIImage())!
     }
     
-    func FilterImageTemperatureCold(Level: LevelFilter, avgColor: Dictionary<String, Int>, imageParam: UIImage) -> UIImage {
-        var myRGBA = RGBAImage(image: imageParam)
-        let count = myRGBA!.width * myRGBA!.height
+    func FilterImageTemperatureCold(Level: LevelFilter, avgColor: Dictionary<String, Int>, myRGBA: RGBAImage) -> UIImage {
+        
+        var myRGBA = myRGBA
         let avgRed = avgColor["Red"]
         let avgBlue = avgColor["Blue"]
         
-        for y in 0..<myRGBA!.height{
-            for x in 0..<myRGBA!.width{
-                let index = y * myRGBA!.width + x
-                var pixel = myRGBA!.pixels[index]
+        for y in 0..<myRGBA.height{
+            for x in 0..<myRGBA.width{
+                let index = y * myRGBA.width + x
+                var pixel = myRGBA.pixels[index]
                 
                 var RedDiff = Int(pixel.red) - avgRed!
                 var BlueDiff = Int(pixel.blue) - avgBlue!
@@ -180,30 +177,28 @@ class Filters:FilterType {
                     
                     pixel.red = UInt8( max(0,min(255,avgRed! + RedDiff)))
                     pixel.blue = UInt8( max(0,min(255,avgBlue! + BlueDiff)))
-                    myRGBA!.pixels[index] = pixel
+                    myRGBA.pixels[index] = pixel
                     
                 }
             }
         }
-        return (myRGBA?.toUIImage())!
+        return (myRGBA.toUIImage())!
     }
     
     
-    func FilterImageContrast(Level: LevelFilter, avgColor: Dictionary<String,Int>, imageParam: UIImage) -> UIImage {
-        var myRGBA = RGBAImage(image: imageParam)
-        let count = myRGBA!.width * myRGBA!.height
+    func FilterImageContrast(Level: LevelFilter, avgColor: Dictionary<String,Int>, myRGBA: RGBAImage) -> UIImage {
+
         let avgRed = avgColor["Red"]
+        var myRGBA = myRGBA
         
-        for y in 0..<myRGBA!.height{
-            for x in 0..<myRGBA!.width{
-                let index = y * myRGBA!.width + x
-                var pixel = myRGBA!.pixels[index]
+        for y in 0..<myRGBA.height{
+            for x in 0..<myRGBA.width{
+                let index = y * myRGBA.width + x
+                var pixel = myRGBA.pixels[index]
                 var redDiff = Int(pixel.red) - avgRed!
                 
                 if(redDiff>0)
                 {
-                    //print(Level)
-                    
                     switch Level.rawValue{
                     case "high":
                         redDiff = redDiff*3
@@ -215,11 +210,11 @@ class Filters:FilterType {
                         redDiff = redDiff*2
                     }
                     pixel.red = UInt8( max(0,min(255,avgRed! + redDiff)))
-                    myRGBA!.pixels[index] = pixel
+                    myRGBA.pixels[index] = pixel
                 }
             }
         }
-        return (myRGBA?.toUIImage())!
+        return (myRGBA.toUIImage())!
     }
 }
 
@@ -231,7 +226,7 @@ class Photo:Filters{
     
     override init(){
         super.init()
-        var ColorDictionary = self.ReadColors(imageParam: images!)
+        _ = self.ReadColors(imageParam: images!)
     }
     
     func ReadColors(imageParam: UIImage) -> Dictionary<String,Int>{
@@ -269,17 +264,25 @@ enum LevelFilter : String{
 }
 
 let images = UIImage(named: "sample")
+var myRGBA = RGBAImage(image: images!)
 let PhotoFilter = Photo()
 var ColorDictionary = PhotoFilter.ReadColors(imageParam: images!)
 
 
-var Filter1 = PhotoFilter.FilterImageContrast(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
 
-var Filter2 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+/*Each of the 5 filters have the dictionary LevelFilter with 3 values:
+    high
+    medium
+    low
+ so its posible to use any of them to affect the image level.*/
 
-var Filter3 = PhotoFilter.FilterImageTemperatureHot(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+var Filter1 = PhotoFilter.FilterImageContrast(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
-var Filter4 = PhotoFilter.FilterImageDark(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+var Filter2 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
-var Filter5 = PhotoFilter.FilterImageBright(Level: LevelFilter.medium, avgColor: ColorDictionary, imageParam: images!)
+var Filter3 = PhotoFilter.FilterImageTemperatureHot(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
+
+var Filter4 = PhotoFilter.FilterImageDark(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
+
+var Filter5 = PhotoFilter.FilterImageBright(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
