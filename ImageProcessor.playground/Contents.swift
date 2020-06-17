@@ -201,11 +201,11 @@ class Filters:FilterType {
                 {
                     switch Level.rawValue{
                     case "high":
-                        redDiff = redDiff*4
+                        redDiff = Int(redDiff+10)
                     case "medium":
-                        redDiff = redDiff*3
+                        redDiff = Int(redDiff+50)
                     case "low":
-                        redDiff = redDiff*2
+                        redDiff = Int(redDiff+30	)
                     default:
                         redDiff = redDiff*2
                     }
@@ -276,11 +276,11 @@ var ColorDictionary = PhotoFilter.ReadColors(imageParam: images!)
     low
  so its posible to use any of them to affect the image level.*/
 
-var Filter1 = PhotoFilter.FilterImageContrast(Level: LevelFilter.low, avgColor: ColorDictionary, myRGBA: myRGBA!)
+var Filter1 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.low, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
-var Filter2 = PhotoFilter.FilterImageContrast(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
+var Filter2 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
-var Filter3 = PhotoFilter.FilterImageContrast(Level: LevelFilter.high, avgColor: ColorDictionary, myRGBA: myRGBA!)
+var Filter3 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.high, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
 /*var Filter2 = PhotoFilter.FilterImageTemperatureCold(Level: LevelFilter.medium, avgColor: ColorDictionary, myRGBA: myRGBA!)
 
